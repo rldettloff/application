@@ -1,7 +1,7 @@
 <?php
 /* Ryder Dettloff
 * January 2024
-* https://ryderdettloff.greenriverdev.com/328/diner/
+* https://ryderdettloff.greenriverdev.com/328/application/
 * This is my Controller
 */
 

@@ -23,11 +23,15 @@ $f3->route('GET /', function () {
 });
 
 
-$f3->route('GET /apply-now', function () { //confusion with my rerouting
-    //getting a 404 error. routing with the apply now button is causing an issue.
+$f3->route('GET /personal', function () {
 
     $newView = new Template();
     echo $newView->render('views/personal.php');
+});
+$f3->route('GET /experience', function () {
+
+    $newView = new Template();
+    echo $newView->render('views/experience.php');
 });
 
 // Run Fat-Free

@@ -15,6 +15,7 @@ require_once('vendor/autoload.php');
 // Instance method
 $f3 = Base::instance();
 
+
 // Define a default route
 $f3->route('GET /', function () {
     // Load the home view
@@ -23,25 +24,77 @@ $f3->route('GET /', function () {
 });
 
 
-$f3->route('GET /personal', function () {
+$f3->route('GET|POST /personal', function ($f3) {
 
-    $newView = new Template();
-    echo $newView->render('views/personal.php');
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $firstName = $_POST['firstName'];
+        $lastName = $_POST['lastName'];
+        $email = $_POST['email'];
+        $state = $_POST['state'];
+        $phoneNumber = $_POST['phoneNumber'];
+
+        $f3->set('SESSION.firstName', $firstName);
+        $f3->set('SESSION.lastName', $lastName);
+        $f3->set('SESSION.email', $email);
+        $f3->set('SESSION.state', $state);
+        $f3->set('SESSION.phoneNumber', $phoneNumber);
+
+        $f3->reroute('experience');
+    }
+
+    $view = new Template();
+    echo $view->render('views/personal.php');
+
 });
-$f3->route('GET /experience', function () {
+$f3->route('GET|POST /experience', function ($f3) {
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $biography = $_POST['biography'];
+        $githubLink = $_POST['githubLink'];
+        $yearsOfExperience = $_POST['yearsOfExperience'];
+        $relocate = $_POST['relocate'];
+
+        $f3->set('SESSION.biography', $biography);
+        $f3->set('SESSION.githubLink', $githubLink);
+        $f3->set('SESSION.yearsOfExperience', $yearsOfExperience);
+        $f3->set('SESSION.relocate', $relocate);
+
+        $f3->reroute('jobOpenings');
+    }
 
     $newView = new Template();
     echo $newView->render('views/experience.php');
 });
-$f3->route('GET /jobOpenings', function () {
+$f3->route('GET|POST /jobOpenings', function ($f3) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+        if (isset($_POST['softwareDevelopmentJobs'])) {
+            $softwareDevelopmentJobs = implode(', ', $_POST['softwareDevelopmentJobs']);
+        }else{
+            $softwareDevelopmentJobs = "None Selected";
+        }
+        if (isset($_POST['industryVerticals'])) {
+            $industryVerticals = implode(', ', $_POST['industryVerticals']);
+        }else{
+            $industryVerticals = "None Selected";
+        }
+
+
+        $f3->set('SESSION.softwareDevelopmentJobs', $softwareDevelopmentJobs);
+        $f3->set('SESSION.industryVerticals', $industryVerticals);
+
+        $f3->reroute('summary');
+    }
     $newView = new Template();
     echo $newView->render('views/jobOpenings.php');
 });
-$f3->route('GET /summary', function () {
+$f3->route('GET|POST /summary', function () {
 
     $newView = new Template();
-    echo $newView->render('views/summary.php');
+    echo $newView->render('views/summary.html');
 });
 $f3->route('GET /home', function () {
     // Load the home view

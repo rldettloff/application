@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!-- Ryder Dettloff -->
+<!-- Feb 2024 -->
+<!--https://ryderdettloff.greenriverdev.com/328/application/-->
+<!-- This is The Job Openings Page -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,6 +33,7 @@
             <div class="col-md-12">
                 <h2>Mailing List Subscriptions</h2>
             </div>
+            <form action="#" method="post">
             <div class="row">
                 <div class="col-md-12">
                     <!--at this point i still need to figure out how to store these in arrays.. , stolen from my previous forms-->
@@ -96,9 +101,10 @@
             </div>
             <div class="row mt-3">
                 <div class="col-md-12">
-                    <a href="summary" class="btn btn-primary w-100" type="button">Next</a>
+                    <button type="submit" class="btn btn-primary w-100">Next</button>
                 </div>
             </div>
+        </form>
         </div>
     </div>
 </div>

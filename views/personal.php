@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!-- Ryder Dettloff -->
+<!-- Feb 2024 -->
+<!--https://ryderdettloff.greenriverdev.com/328/application/-->
+<!-- This is the Personal Info Page -->
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
@@ -28,9 +32,9 @@
             <div class="col-md-12">
                 <h2>Personal Information</h2>
             </div>
+            <form action="#" method="post">
             <div class="row">
                 <div class="col-md-6 d-flex flex-column">
-            <form action="/experience" method="post">
                 <div class="row mb-3">
                     <div class="col">
                         <label for="firstName" class="form-label">First Name</label>
@@ -75,12 +79,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="experience" class="btn btn-primary w-100" type="button">Next</a>
+                            <button type="submit" class="btn btn-primary w-100">Next</button>
                             <!--<button type="submit" class="btn btn-primary w-100">Next</button> used to update "apply" button to "next" button-->
                         </div>
                     </div>
                 </div>
                 </div>
+        </form>
             </div>
         </div>
     </div>

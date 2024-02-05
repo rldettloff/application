@@ -12,8 +12,12 @@
 <nav class="navbar navbar-light bg-white">
     <div class="container-fluid">
         <div class="navbar-text">
-            <h6>Random Software Co. LLC</h6>
-            <h6>Software Engineering Internship</h6>
+            <a class="navbar-brand" href="home">
+                <h6>Random Software Co. LLC</h6>
+            </a>
+            <a class="navbar-brand" href="home">
+                <h6>Software Engineering Internship</h6>
+            </a>
             <h6>Seattle Washington, Paid</h6>
         </div>
         <div class="d-flex">

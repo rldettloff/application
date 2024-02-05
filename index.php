@@ -38,6 +38,17 @@ $f3->route('GET /jobOpenings', function () {
     $newView = new Template();
     echo $newView->render('views/jobOpenings.php');
 });
+$f3->route('GET /summary', function () {
+
+    $newView = new Template();
+    echo $newView->render('views/summary.php');
+});
+$f3->route('GET /home', function () {
+    // Load the home view
+    $newView = new Template();
+    echo $newView->render('views/home.html');
+});
+
 
 // Run Fat-Free
 $f3->run();

@@ -33,6 +33,11 @@ $f3->route('GET /experience', function () {
     $newView = new Template();
     echo $newView->render('views/experience.php');
 });
+$f3->route('GET /jobOpenings', function () {
+
+    $newView = new Template();
+    echo $newView->render('views/jobOpenings.php');
+});
 
 // Run Fat-Free
 $f3->run();

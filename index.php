@@ -8,10 +8,9 @@
 // Display Errors
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
+session_save_path('/home/ryderdet/public_html');
 // Require the autoload file
 require_once('vendor/autoload.php');
-
 // Instance method
 $f3 = Base::instance();
 
@@ -45,7 +44,7 @@ $f3->route('GET|POST /personal', function ($f3) {
     }
 
     $view = new Template();
-    echo $view->render('views/personal.php');
+    echo $view->render('views/personal.html');
 
 });
 $f3->route('GET|POST /experience', function ($f3) {
@@ -66,7 +65,7 @@ $f3->route('GET|POST /experience', function ($f3) {
     }
 
     $newView = new Template();
-    echo $newView->render('views/experience.php');
+    echo $newView->render('views/experience.html');
 });
 $f3->route('GET|POST /jobOpenings', function ($f3) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -89,7 +88,7 @@ $f3->route('GET|POST /jobOpenings', function ($f3) {
         $f3->reroute('summary');
     }
     $newView = new Template();
-    echo $newView->render('views/jobOpenings.php');
+    echo $newView->render('views/jobOpenings.html');
 });
 $f3->route('GET|POST /summary', function () {
 

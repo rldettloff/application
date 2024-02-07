@@ -33,27 +33,62 @@
 <div class="container-fluid bg-light">
     <div class="row">
         <div class="col-md-6 d-flex flex-column">
-            <h2>Summary</h2>
             <h3>Personal Information</h3>
-            <p><strong>Name:</strong> {{ @SESSION.firstName }} {{ @SESSION.lastName }}</p>
-            <p><strong>Email:</strong> {{ @SESSION.email }}</p>
-            <p><strong>State:</strong> {{ @SESSION.state }}</p>
-            <p><strong>Phone Number:</strong> {{ @SESSION.phoneNumber }}</p>
-
+            <table class="table">
+                <tr>
+                    <td><strong>Name:</strong></td>
+                    <td>{{ @SESSION.firstName }} {{ @SESSION.lastName }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Email:</strong></td>
+                    <td>{{ @SESSION.email }}</td>
+                </tr>
+                <tr>
+                    <td><strong>State:</strong></td>
+                    <td>{{ @SESSION.state }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Phone Number:</strong></td>
+                    <td>{{ @SESSION.phoneNumber }}</td>
+                </tr>
+            </table>
             <h3>Experience Information</h3>
-            <p><strong>Biography:</strong> {{ @SESSION.biography }}</p>
-            <p><strong>GitHub Link:</strong> {{ @SESSION.githubLink }}</p>
-            <p><strong>Years of Experience:</strong> {{ @SESSION.yearsOfExperience }}</p>
-            <p><strong>Willing to Relocate:</strong> {{ @SESSION.relocate }}</p>
-
+            <table class="table">
+                <tr>
+                    <td><strong>Biography:</strong></td>
+                    <td>{{ @SESSION.biography }}</td>
+                </tr>
+                <tr>
+                    <td><strong>GitHub Link:</strong></td>
+                    <td>{{ @SESSION.githubLink }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Years of Experience:</strong></td>
+                    <td>{{ @SESSION.yearsOfExperience }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Willing to Relocate:</strong></td>
+                    <td>{{ @SESSION.relocate }}</td>
+                </tr>
+            </table>
             <h3>Job Openings Preferences</h3>
-            <p><strong>Software Development Jobs:</strong> {{ @SESSION.softwareDevelopmentJobs }}</p>
-            <p><strong>Industry Verticals:</strong> {{ @SESSION.industryVerticals }}</p>
+            <table class="table">
+                <tr>
+                    <td><strong>Software Development Jobs:</strong></td>
+                    <td>{{ @SESSION.softwareDevelopmentJobs }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Industry Verticals:</strong></td>
+                    <td>{{ @SESSION.industryVerticals }}</td>
+                </tr>
+            </table>
         </div>
-        <div class="col-md-6 text-center">
-            <img src="images/building.jpeg" alt="tech building" class="img-fluid rounded">
-        </div>
+        <div class="col-md-6 text-center flex-colum">
+            <img src="images/greendefaultimage.jpeg" alt="tech building" class="img-fluid rounded">
+            <h3>Summary</h3><br>
+            <p>Iway opehay ouyay enjoyway ethay allengechay ofway ranslatingtay ordinaryway exttay. EarchSay otay earnLay oreway aboutway igPay AtinLay, it'sway interestingway! IgPay AtinLay isway away unnyfay anguagelay oftenway usedway orfay amusementway. OtsMay ofway unway otay eepKeeplay ouryay indsmay arkedWay. Amusementway isway oneyay ofway ethay ainmay eaturesfay ofway IgPay AtinLay. AnyMay eoplePay endway uptay aughinglay atway ethay esultsray. EtHay odayay, IgPay AtinLay isway oftenway usedway inway umeHumorSay. Itway akesMay away ileway otay earnLay IgPay AtinLay entencedSay.</p>
     </div>
+</div>
 </div>
 
 <footer class="container-fluid bg-white text-center py-6">

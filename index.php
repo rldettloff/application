@@ -11,6 +11,7 @@ error_reporting(E_ALL);
 session_save_path('/home/ryderdet/public_html');
 // Require the autoload file
 require_once('vendor/autoload.php');
+require_once('validation.php');
 // Instance method
 $f3 = Base::instance();
 

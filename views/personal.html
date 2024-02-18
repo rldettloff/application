@@ -39,15 +39,24 @@
                             <div class="col">
                                 <label for="firstName" class="form-label">First Name</label>
                                 <input type="text" class="form-control" id="firstName" name="firstName" placeholder="John" required>
+                                <check if="{{ isset(@errors['firstName']) }}">
+                                    <span class="err">{{ @errors['firstName'] }}</span>
+                                </check>
                             </div>
                             <div class="col">
                                 <label for="lastName" class="form-label">Last Name</label>
                                 <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Appleseed" required>
+                                <check if="{{ isset(@errors['lastName']) }}">
+                                    <span class="err">{{ @errors['lastName'] }}</span>
+                                </check>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="my.email@email.com" required>
+                            <check if="{{ isset(@errors['email']) }}">
+                                <span class="err">{{ @errors['email'] }}</span>
+                            </check>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
@@ -56,7 +65,10 @@
                             </div>
                             <div class="col">
                                 <label for="phoneNumber" class="form-label">Phone</label>
-                                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="222-333-4444" required>
+                                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="2223334444" required>
+                                <check if="{{ isset(@errors['phoneNumber']) }}">
+                                    <span class="err">{{ @errors['phoneNumber'] }}</span>
+                                </check>
                             </div>
                         </div>
                     </div>

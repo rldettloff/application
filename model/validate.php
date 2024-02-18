@@ -18,7 +18,12 @@ class Validate {
 
         return in_array($yearsOfExperience, DataLayer::getExperience());
     }
+    static function validPhone($phone) {
 
+        $phoneNumbers = preg_replace('/[^0-9]/', '', $phone);
+
+        return strlen($phoneNumbers) === 10;
+    }
 
     static function validEmail($email) {
 

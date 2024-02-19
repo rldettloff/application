@@ -11,7 +11,7 @@ error_reporting(E_ALL);
 session_save_path('/home/ryderdet/public_html');
 // Require the autoload file
 require_once('vendor/autoload.php');
-require_once('validation.php');
+require_once('model/validate.php');
 // Instance method
 $f3 = Base::instance();
 
@@ -26,36 +26,62 @@ $f3->route('GET /', function () {
 
 $f3->route('GET|POST /personal', function ($f3) {
 
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        $firstName = $_POST['firstName'];
-        $lastName = $_POST['lastName'];
-        $email = $_POST['email'];
-        $state = $_POST['state'];
-        $phoneNumber = $_POST['phoneNumber'];
+        $firstName = '';
+        $lastName = '';
+        $email = '';
+        $state = '';
+        $phoneNumber = '';
 
-        $f3->set('SESSION.firstName', $firstName);
-        $f3->set('SESSION.lastName', $lastName);
-        $f3->set('SESSION.email', $email);
-        $f3->set('SESSION.state', $state);
-        $f3->set('SESSION.phoneNumber', $phoneNumber);
+        if (validFirstName($_POST['firstName'])) {
+            $firstName = $_POST["firstName"];
+        } else {
+            $f3->set('errors["firstName"]', 'invalid firstname');
+        }
 
-        $f3->reroute('experience');
+        if (validLastName($_POST['lastName'])) {
+            $lastName = $_POST["lastName"];
+        } else {
+            $f3->set('errors["lastName"]', 'invalid lastName');
+        }
+
+        if (validEmail($_POST['email'])) {
+            $email = $_POST["email"];
+        } else {
+            $f3->set('errors["email"]', 'invalid email');
+        }
+
+        if (validPhone($_POST['phoneNumber'])) {
+            $phoneNumber = $_POST["phoneNumber"];
+        } else {
+            $f3->set('errors["phoneNumber"]', 'invalid phone Number');
+        }
+
+        if (empty($f3->get('errors'))) {
+            $state = $_POST['state'];
+            $f3->set('SESSION.firstName', $firstName);
+            $f3->set('SESSION.lastName', $lastName);
+            $f3->set('SESSION.email', $email);
+            $f3->set('SESSION.state', $state);
+            $f3->set('SESSION.phoneNumber', $phoneNumber);
+
+            $f3->reroute('experience');
+        }
     }
 
     $view = new Template();
     echo $view->render('views/personal.html');
-
 });
 $f3->route('GET|POST /experience', function ($f3) {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $biography = $_POST['biography'];
-        $githubLink = $_POST['githubLink'];
-        $yearsOfExperience = $_POST['yearsOfExperience'];
+        $githubLink = '';
+        $yearsOfExperience = '';
         $relocate = $_POST['relocate'];
+
 
         $f3->set('SESSION.biography', $biography);
         $f3->set('SESSION.githubLink', $githubLink);

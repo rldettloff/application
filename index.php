@@ -77,18 +77,31 @@ $f3->route('GET|POST /experience', function ($f3) {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        $biography = $_POST['biography'];
+        $biography = '';
         $githubLink = '';
         $yearsOfExperience = '';
-        $relocate = $_POST['relocate'];
+        $relocate = '';
 
+        if (validGithub($_POST['githubLink'])) {
+            $githubLink = $_POST["githubLink"];
+        } else {
+            $f3->set('errors["githubLink"]', 'invalid Github Link');
+        }
+        if (validExperience($_POST['yearsOfExperience'])) {
+            $yearsOfExperience = $_POST["yearsOfExperience"];
+        } else {
+            $f3->set('errors["yearsOfExperience"]', 'invalid years Of Experience');
+        }
+        if (empty($f3->get('errors'))) {
+            $biography = $_POST['biography'];
+            $relocate = $_POST['relocate'];
+            $f3->set('SESSION.biography', $biography);
+            $f3->set('SESSION.githubLink', $githubLink);
+            $f3->set('SESSION.yearsOfExperience', $yearsOfExperience);
+            $f3->set('SESSION.relocate', $relocate);
 
-        $f3->set('SESSION.biography', $biography);
-        $f3->set('SESSION.githubLink', $githubLink);
-        $f3->set('SESSION.yearsOfExperience', $yearsOfExperience);
-        $f3->set('SESSION.relocate', $relocate);
-
-        $f3->reroute('jobOpenings');
+            $f3->reroute('jobOpenings');
+        }
     }
 
     $newView = new Template();

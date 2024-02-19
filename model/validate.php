@@ -1,34 +1,34 @@
 <?php
 
-class Validate {
-    static function validFirstName($firstName)
+    function validFirstName($firstName): bool
     {
         return trim($firstName) != "";
     }
-    static function validLastName($lastName)
+    function validLastName($lastName): bool
     {
         return trim($lastName) != "";
     }
-    static function validGithub($githubLink) {
+    function validGithub($githubLink): bool
+    {
 
         return filter_var($githubLink, FILTER_VALIDATE_URL) !== false;
     }
 
-    static function validExperience($yearsOfExperience) {
+    function validExperience($yearsOfExperience): bool
+    {
 
-        return in_array($yearsOfExperience, DataLayer::getExperience());
+        return in_array($yearsOfExperience, (new DataLayer)->getExperience());
     }
-    static function validPhone($phone) {
+    function validPhone($phone): bool
+    {
 
         $phoneNumbers = preg_replace('/[^0-9]/', '', $phone);
 
         return strlen($phoneNumbers) === 10;
     }
 
-    static function validEmail($email) {
+    function validEmail($email): bool
+    {
 
         return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
-    }
 }
-
-?>

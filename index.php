@@ -12,6 +12,7 @@ session_save_path('/home/ryderdet/public_html');
 // Require the autoload file
 require_once('vendor/autoload.php');
 require_once('model/validate.php');
+require_once('model/DataLayer.php');
 // Instance method
 $f3 = Base::instance();
 
@@ -34,25 +35,25 @@ $f3->route('GET|POST /personal', function ($f3) {
         $state = '';
         $phoneNumber = '';
 
-        if (validFirstName($_POST['firstName'])) {
+        if (validate::validFirstName($_POST['firstName'])) {
             $firstName = $_POST["firstName"];
         } else {
             $f3->set('errors["firstName"]', 'invalid firstname');
         }
 
-        if (validLastName($_POST['lastName'])) {
+        if (validate::validLastName($_POST['lastName'])) {
             $lastName = $_POST["lastName"];
         } else {
             $f3->set('errors["lastName"]', 'invalid lastName');
         }
 
-        if (validEmail($_POST['email'])) {
+        if (validate::validEmail($_POST['email'])) {
             $email = $_POST["email"];
         } else {
             $f3->set('errors["email"]', 'invalid email');
         }
 
-        if (validPhone($_POST['phoneNumber'])) {
+        if (validate::validPhone($_POST['phoneNumber'])) {
             $phoneNumber = $_POST["phoneNumber"];
         } else {
             $f3->set('errors["phoneNumber"]', 'invalid phone Number');
@@ -82,12 +83,12 @@ $f3->route('GET|POST /experience', function ($f3) {
         $yearsOfExperience = '';
         $relocate = '';
 
-        if (validGithub($_POST['githubLink'])) {
+        if (validate::validGithub($_POST['githubLink'])) {
             $githubLink = $_POST["githubLink"];
         } else {
             $f3->set('errors["githubLink"]', 'invalid Github Link');
         }
-        if (validExperience($_POST['yearsOfExperience'])) {
+        if (validate::validExperience($_POST['yearsOfExperience'])) {
             $yearsOfExperience = $_POST["yearsOfExperience"];
         } else {
             $f3->set('errors["yearsOfExperience"]', 'invalid years Of Experience');

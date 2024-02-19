@@ -67,7 +67,7 @@ $f3->route('GET|POST /personal', function ($f3) {
             $f3->set('SESSION.state', $state);
             $f3->set('SESSION.phoneNumber', $phoneNumber);
 
-            $f3->reroute('experience');
+            $this->$f3->reroute('experience');
         }
     }
 
@@ -83,16 +83,18 @@ $f3->route('GET|POST /experience', function ($f3) {
         $yearsOfExperience = '';
         $relocate = '';
 
-        if (validate::validGithub($_POST['githubLink'])) {
-            $githubLink = $_POST["githubLink"];
+        if (isset($_POST['githubLink']) and validate::validGithub($_POST['githubLink'])) {
+            $githubLink = $_POST['githubLink'];
         } else {
-            $f3->set('errors["githubLink"]', 'invalid Github Link');
+            $f3->set('errors["githubLink"]', "Invalid Github Link");
         }
-        if (validate::validExperience($_POST['yearsOfExperience'])) {
-            $yearsOfExperience = $_POST["yearsOfExperience"];
+
+        if (isset($_POST['yearsOfExperience']) and validate::validExperience($_POST['yearsOfExperience'])) {
+            $yearsOfExperience = $_POST['yearsOfExperience'];
         } else {
-            $f3->set('errors["yearsOfExperience"]', 'invalid years Of Experience');
+            $f3->set('errors["yearsOfExperience"]', "Please select years of experience");
         }
+
         if (empty($f3->get('errors'))) {
             $biography = $_POST['biography'];
             $relocate = $_POST['relocate'];
@@ -105,9 +107,12 @@ $f3->route('GET|POST /experience', function ($f3) {
         }
     }
 
+    $f3->set('yearsOfExperience', DataLayer::getExperience());
+
     $newView = new Template();
     echo $newView->render('views/experience.html');
 });
+
 $f3->route('GET|POST /jobOpenings', function ($f3) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

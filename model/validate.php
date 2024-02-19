@@ -6,7 +6,7 @@ https://ryderdettloff.greenriverdev.com/328/application/
 This is my validation file. it checks each code indiviual making sure
 it follows the standards I set in place on my html pages.\
  */
-class Validate
+class validate
 {
     static function validFirstName($firstName): bool
     {

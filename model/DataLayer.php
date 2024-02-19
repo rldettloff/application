@@ -7,7 +7,7 @@ This is the datalayer page that holds the experience array to be accessed by con
  */
 class DataLayer
 {
-    function getExperience(): array
+    static function getExperience(): array
     {
         return array('beginner', 'intermediate', 'pro');
     }

@@ -52,7 +52,7 @@ class Controller {
                 } else { //gets same data however applicants subscribed to list will inherit the subcribed class.
                     $applicant = new Applicant($firstName, $lastName, $email, $state, $phoneNumber);
                 }
-
+                $_SESSION['applicant'] = $applicant; //create new session to store applicant dat
                 $this->f3->reroute('experience');
                 return;
             }
@@ -72,6 +72,7 @@ class Controller {
             $githubLink = '';
             $yearsOfExperience = '';
             $relocate = '';
+            $applicant = $_SESSION['applicant'];
 
             if (isset($_POST['githubLink']) and model::validGithub($_POST['githubLink'])) {
                 $githubLink = $_POST['githubLink'];
@@ -93,8 +94,9 @@ class Controller {
                 $this->f3->set('SESSION.yearsOfExperience', $yearsOfExperience);
                 $this->f3->set('SESSION.relocate', $relocate);
 
-                $this->f3->reroute('jobOpenings');
             }
+            $this->f3->reroute('jobOpenings');
+        return;
         }
 
         $this->f3->set('yearsOfExperience', DataLayer::getExperience());

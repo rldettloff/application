@@ -16,6 +16,8 @@ require_once('model/model.php');
 require_once('model/DataLayer.php');
 require_once('model/Applicant.php');
 
+session_start();
+
 // Instance method
 $f3 = Base::instance();
 

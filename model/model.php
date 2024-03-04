@@ -1,10 +1,10 @@
 <?php
-/*
+/**
  * Ryder Dettloff
-Feb 2024
-https://ryderdettloff.greenriverdev.com/328/application/
-This is my validation file. it checks each code indiviual making sure
-it follows the standards I set in place on my html pages.\
+ * Feb 2024
+ * https://ryderdettloff.greenriverdev.com/328/application/
+ * This is my validation file. it checks each code indiviual making sure
+ * it follows the standards I set in place on my html pages.\
  */
 class model
 {

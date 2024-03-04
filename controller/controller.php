@@ -1,6 +1,11 @@
 <?php
-
-class Controller {
+/**
+ * Ryder Dettloff
+ * this is my controller which handles routing
+ * March 2024
+ **/
+class controller
+{
 
     public function __construct($f3)
     {
@@ -12,6 +17,7 @@ class Controller {
         $view = new Template();
         echo $view->render('views/home.html');
     }
+
     public function personal()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -20,7 +26,7 @@ class Controller {
             $email = $_POST['email'];
             $state = $_POST['state'];
             $phoneNumber = $_POST['phoneNumber'];
-            $subscribeMailingLists = isset($_POST['subscribeMailingLists']);
+            $mailingListCheckbox = isset($_POST['mailingListCheckbox']);
 
             if (model::validFirstName($_POST['firstName'])) {
                 $firstName = $_POST["firstName"];
@@ -47,7 +53,7 @@ class Controller {
             }
 
             if (empty($this->f3->get('errors'))) {
-                if ($subscribeMailingLists) {
+                if ($mailingListCheckbox) {
                     $applicant = new Applicant_SubscribedToLists($firstName, $lastName, $email, $state, $phoneNumber);
                 } else { //gets same data however applicants subscribed to list will inherit the subcribed class.
                     $applicant = new Applicant($firstName, $lastName, $email, $state, $phoneNumber);
@@ -67,73 +73,95 @@ class Controller {
     public function experience()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Retrieve form data
+            $biography = $_POST['biography'];
+            $githubLink = $_POST['githubLink'];
+            $yearsOfExperience = $_POST['yearsOfExperience'];
+            $relocate = $_POST['relocate'];
+            //get the session information
+            if (isset($_SESSION['applicant'])) {
+                $applicant = $_SESSION['applicant'];
+                if (!empty($githubLink) && model::validGithub($githubLink)) {
+                    $applicant->setGithubLink($githubLink);
+                } else {
+                    $this->f3->set('errors["githubLink"]', "Invalid Github Link");
+                }
 
-            $biography = '';
-            $githubLink = '';
-            $yearsOfExperience = '';
-            $relocate = '';
-            $applicant = $_SESSION['applicant'];
+                if (!empty($yearsOfExperience) && model::validExperience($yearsOfExperience)) {
+                    $applicant->setYearsOfExperience($yearsOfExperience);
+                } else {
+                    $this->f3->set('errors["yearsOfExperience"]', "Please select years of experience");
+                }
 
-            if (isset($_POST['githubLink']) and model::validGithub($_POST['githubLink'])) {
-                $githubLink = $_POST['githubLink'];
-            } else {
-                $this->f3->set('errors["githubLink"]', "Invalid Github Link");
-            }
+                if (empty($this->f3->get('errors'))) {
+                    $applicant->setBiography($biography);
+                    $applicant->setRelocate($relocate);
+                    $applicant->setGithub($githubLink);
+                    $applicant->setYears($yearsOfExperience);
 
-            if (isset($_POST['yearsOfExperience']) and model::validExperience($_POST['yearsOfExperience'])) {
-                $yearsOfExperience = $_POST['yearsOfExperience'];
-            } else {
-                $this->f3->set('errors["yearsOfExperience"]', "Please select years of experience");
-            }
 
-            if (empty($this->f3->get('errors'))) {
-                $biography = $_POST['biography'];
-                $relocate = $_POST['relocate'];
-                $this->f3->set('SESSION.biography', $biography);
-                $this->f3->set('SESSION.githubLink', $githubLink);
-                $this->f3->set('SESSION.yearsOfExperience', $yearsOfExperience);
-                $this->f3->set('SESSION.relocate', $relocate);
-
+                    $_SESSION['applicant'] = $applicant;
+                }
             }
             $this->f3->reroute('jobOpenings');
-        return;
+            return;
         }
 
+        // Load the experience form
         $this->f3->set('yearsOfExperience', DataLayer::getExperience());
-
         $newView = new Template();
         echo $newView->render('views/experience.html');
     }
 
+
     public function jobOpenings()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Check if the applicant session is set and not null
+            if (isset($_SESSION['applicant']) && $_SESSION['applicant'] != null) {
+                $applicant = $_SESSION['applicant'];
 
-            if (isset($_POST['softwareDevelopmentJobs'])) {
-                $softwareDevelopmentJobs = implode(', ', $_POST['softwareDevelopmentJobs']);
-            }else{
-                $softwareDevelopmentJobs = "None Selected";
+                // Perform validation checks
+                if (isset($_POST['softwareDevelopmentJobs'])) {
+                    $softwareDevelopmentJobs = implode(', ', $_POST['softwareDevelopmentJobs']);
+                    $applicant->setSoftwareDevelopmentJobs($softwareDevelopmentJobs);
+
+                } else {
+                    $softwareDevelopmentJobs = "None Selected";
+                }
+                if (isset($_POST['industryVerticals'])) {
+                    $industryVerticals = implode(', ', $_POST['industryVerticals']);
+                } else {
+                    $industryVerticals = "None Selected";
+                }
+
+                // Update session with job openings info
+                $applicant->setSoftwareDevelopmentJobs($softwareDevelopmentJobs);
+                $applicant->setIndustryVerticals($industryVerticals);
+                $_SESSION['applicant'] = $applicant;
+
+
             }
-            if (isset($_POST['industryVerticals'])) {
-                $industryVerticals = implode(', ', $_POST['industryVerticals']);
-            }else{
-                $industryVerticals = "None Selected";
-            }
-
-
-            $this->f3->set('SESSION.softwareDevelopmentJobs', $softwareDevelopmentJobs);
-            $this->f3->set('SESSION.industryVerticals', $industryVerticals);
-
             $this->f3->reroute('summary');
+            return;
         }
+
+        //render job openings
         $newView = new Template();
         echo $newView->render('views/jobOpenings.html');
     }
 
+
     public function summary()
     {
-        $newView = new Template();
-        echo $newView->render('views/summary.html');
-    }
+        //check session data
+        if (isset($_SESSION['applicant'])) {
+            $applicant = $_SESSION['applicant'];
+            $this->f3->set('applicant', $applicant);
 
+            $view = new Template();
+            echo $view->render('views/summary.html');
+
+        }
+    }
 }

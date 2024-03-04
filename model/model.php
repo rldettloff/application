@@ -8,28 +8,53 @@
  */
 class model
 {
+    /**
+     * @param $firstName
+     * @return bool
+     * validates first name
+     */
     static function validFirstName($firstName): bool
     {
         return trim($firstName) != "";
     }
 
+    /**
+     * @param $lastName
+     * @return bool
+     * validates last name
+     */
     static function validLastName($lastName): bool
     {
         return trim($lastName) != "";
     }
 
+    /**
+     * @param $githubLink
+     * @return bool
+     * validates github link
+     */
     static function validGithub($githubLink): bool
     {
 
         return filter_var($githubLink, FILTER_VALIDATE_URL) !== false;
     }
 
+    /**
+     * @param $yearsOfExperience
+     * @return bool
+     * validates years of experience
+     */
     static function validExperience($yearsOfExperience): bool
     {
 
         return in_array($yearsOfExperience, (new DataLayer)->getExperience());
     }
 
+    /**
+     * @param $phone
+     * @return bool
+     * validates phone number
+     */
     static function validPhone($phone): bool
     {
 
@@ -38,6 +63,11 @@ class model
         return strlen($phoneNumbers) === 10;
     }
 
+    /**
+     * @param $email
+     * @return bool
+     * validates email
+     */
     static function validEmail($email): bool
     {
 

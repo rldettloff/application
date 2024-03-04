@@ -1,5 +1,5 @@
 <?php
-/* Ryder Dettloff
+/** Ryder Dettloff
 * January 2024
 * https://ryderdettloff.greenriverdev.com/328/application/
 * This is my Controller
@@ -14,7 +14,9 @@ require_once('vendor/autoload.php');
 require_once('controller/controller.php');
 require_once('model/model.php');
 require_once('model/DataLayer.php');
-require_once('model/Applicant.php');
+require_once('classes/Applicant.php');
+require_once('classes/Applicant_SubscribedToLists.php');
+
 
 session_start();
 

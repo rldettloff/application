@@ -6,18 +6,30 @@
  **/
 class controller
 {
-
+    /**
+     * @param $f3
+     * creates f3 global variable
+     */
     public function __construct($f3)
     {
         $this->f3 = $f3;
     }
 
+    /**
+     * @return void
+     * renders the home page
+     */
     public function home()
     {
         $view = new Template();
         echo $view->render('views/home.html');
     }
 
+    /**
+     * @return void
+     * creates variables relating to personal data form
+     * validates the data and adds it to the session
+     */
     public function personal()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -69,6 +81,10 @@ class controller
         echo $view->render('views/personal.html');
     }
 
+/**
+ * Experience creates variables. it then validates variables that
+ * were entered in and adds them to the session
+ **/
 
     public function experience()
     {
@@ -113,19 +129,22 @@ class controller
         echo $newView->render('views/experience.html');
     }
 
-
+    /**
+     * @return void
+     * only renders if applicant checks the button on the personal
+     * page
+     * supposed to gather checkbox info and add the data to the session
+     */
     public function jobOpenings()
     {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Check if the applicant session is set and not null
-            if (isset($_SESSION['applicant']) && $_SESSION['applicant'] != null) {
+        //This will check if the box is checked, if its not checked, it will redirect to the summary page without
+        //asking additional questions
+        if (isset($_SESSION['applicant']) && $_SESSION['applicant'] instanceof Applicant_SubscribedToLists) {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $applicant = $_SESSION['applicant'];
-
                 // Perform validation checks
                 if (isset($_POST['softwareDevelopmentJobs'])) {
                     $softwareDevelopmentJobs = implode(', ', $_POST['softwareDevelopmentJobs']);
-                    $applicant->setSoftwareDevelopmentJobs($softwareDevelopmentJobs);
-
                 } else {
                     $softwareDevelopmentJobs = "None Selected";
                 }
@@ -134,24 +153,26 @@ class controller
                 } else {
                     $industryVerticals = "None Selected";
                 }
-
                 // Update session with job openings info
                 $applicant->setSoftwareDevelopmentJobs($softwareDevelopmentJobs);
                 $applicant->setIndustryVerticals($industryVerticals);
                 $_SESSION['applicant'] = $applicant;
-
-
+                $this->f3->reroute('summary');
+                return;
             }
+            // Render job openings page
+            $newView = new Template();
+            echo $newView->render('views/jobOpenings.html');
+        } else {
+            // Redirect non-subscribed applicants to a different page or show an error message
             $this->f3->reroute('summary');
-            return;
         }
-
-        //render job openings
-        $newView = new Template();
-        echo $newView->render('views/jobOpenings.html');
     }
 
-
+    /**
+     * @return void
+     * renders the summary
+     */
     public function summary()
     {
         //check session data

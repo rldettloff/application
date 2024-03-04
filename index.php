@@ -14,6 +14,8 @@ require_once('vendor/autoload.php');
 require_once('controller/controller.php');
 require_once('model/model.php');
 require_once('model/DataLayer.php');
+require_once('model/Applicant.php');
+
 // Instance method
 $f3 = Base::instance();
 
@@ -35,10 +37,10 @@ $f3->route('GET|POST /experience', function ($f3){
 $f3->route('GET|POST /jobOpenings', function ($f3) {
     $GLOBALS['controller']->jobOpenings();});
 
-$f3->route('GET|POST /summary', function ($f3){
+$f3->route('GET /summary', function (){
     $GLOBALS['controller']->summary();});
 
-$f3->route('GET /home', function ($f3){
+$f3->route('GET /home', function (){
     $GLOBALS['controller']->home();});
 
 // Run Fat-Free

@@ -12,16 +12,15 @@ class Controller {
         $view = new Template();
         echo $view->render('views/home.html');
     }
-
     public function personal()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-            $firstName = '';
-            $lastName = '';
-            $email = '';
-            $state = '';
-            $phoneNumber = '';
+            $firstName = $_POST['firstName'];
+            $lastName = $_POST['lastName'];
+            $email = $_POST['email'];
+            $state = $_POST['state'];
+            $phoneNumber = $_POST['phoneNumber'];
+            $subscribeMailingLists = isset($_POST['subscribeMailingLists']);
 
             if (model::validFirstName($_POST['firstName'])) {
                 $firstName = $_POST["firstName"];
@@ -48,20 +47,22 @@ class Controller {
             }
 
             if (empty($this->f3->get('errors'))) {
-                $state = $_POST['state'];
-                $this->f3->set('SESSION.firstName', $firstName);
-                $this->f3->set('SESSION.lastName', $lastName);
-                $this->f3->set('SESSION.email', $email);
-                $this->f3->set('SESSION.state', $state);
-                $this->f3->set('SESSION.phoneNumber', $phoneNumber);
+                if ($subscribeMailingLists) {
+                    $applicant = new Applicant_SubscribedToLists($firstName, $lastName, $email, $state, $phoneNumber);
+                } else { //gets same data however applicants subscribed to list will inherit the subcribed class.
+                    $applicant = new Applicant($firstName, $lastName, $email, $state, $phoneNumber);
+                }
 
                 $this->f3->reroute('experience');
+                return;
             }
         }
 
+        // Load personal information form
         $view = new Template();
         echo $view->render('views/personal.html');
     }
+
 
     public function experience()
     {

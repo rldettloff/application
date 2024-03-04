@@ -11,4 +11,5 @@ class DataLayer
     {
         return array('beginner', 'intermediate', 'pro');
     }
+
 }

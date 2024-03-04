@@ -11,7 +11,8 @@ error_reporting(E_ALL);
 session_save_path('/home/ryderdet/public_html');
 // Require the autoload file
 require_once('vendor/autoload.php');
-require_once('model/validate.php');
+require_once('controller/controller.php');
+require_once('model/model.php');
 require_once('model/DataLayer.php');
 // Instance method
 $f3 = Base::instance();
@@ -35,25 +36,25 @@ $f3->route('GET|POST /personal', function ($f3) {
         $state = '';
         $phoneNumber = '';
 
-        if (validate::validFirstName($_POST['firstName'])) {
+        if (model::validFirstName($_POST['firstName'])) {
             $firstName = $_POST["firstName"];
         } else {
             $f3->set('errors["firstName"]', 'invalid firstname');
         }
 
-        if (validate::validLastName($_POST['lastName'])) {
+        if (model::validLastName($_POST['lastName'])) {
             $lastName = $_POST["lastName"];
         } else {
             $f3->set('errors["lastName"]', 'invalid lastName');
         }
 
-        if (validate::validEmail($_POST['email'])) {
+        if (model::validEmail($_POST['email'])) {
             $email = $_POST["email"];
         } else {
             $f3->set('errors["email"]', 'invalid email');
         }
 
-        if (validate::validPhone($_POST['phoneNumber'])) {
+        if (model::validPhone($_POST['phoneNumber'])) {
             $phoneNumber = $_POST["phoneNumber"];
         } else {
             $f3->set('errors["phoneNumber"]', 'invalid phone Number');
@@ -67,7 +68,7 @@ $f3->route('GET|POST /personal', function ($f3) {
             $f3->set('SESSION.state', $state);
             $f3->set('SESSION.phoneNumber', $phoneNumber);
 
-            $this->$f3->reroute('experience');
+            $f3->reroute('experience');
         }
     }
 
@@ -83,13 +84,13 @@ $f3->route('GET|POST /experience', function ($f3) {
         $yearsOfExperience = '';
         $relocate = '';
 
-        if (isset($_POST['githubLink']) and validate::validGithub($_POST['githubLink'])) {
+        if (isset($_POST['githubLink']) and model::validGithub($_POST['githubLink'])) {
             $githubLink = $_POST['githubLink'];
         } else {
             $f3->set('errors["githubLink"]', "Invalid Github Link");
         }
 
-        if (isset($_POST['yearsOfExperience']) and validate::validExperience($_POST['yearsOfExperience'])) {
+        if (isset($_POST['yearsOfExperience']) and model::validExperience($_POST['yearsOfExperience'])) {
             $yearsOfExperience = $_POST['yearsOfExperience'];
         } else {
             $f3->set('errors["yearsOfExperience"]', "Please select years of experience");
